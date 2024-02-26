@@ -2,8 +2,7 @@
 <!-- activity_main.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/light_grey">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/mapImageView"
@@ -33,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_below="@id/listHeaderTextView"
         android:layout_height="270dp"
-        android:background="@drawable/rounded_white_background"
+        android:background="@drawable/rounded_light_grey_background"
         android:layout_margin="8dp"
         android:padding="8dp"
         android:clipToPadding="false"/>
