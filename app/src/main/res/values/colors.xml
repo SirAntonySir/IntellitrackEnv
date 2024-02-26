@@ -11,4 +11,6 @@
     <color name="light_grey">#EFEFEF</color>
     <color name="BackgroundDay">#fafafa</color>
     <color name="BackgroundNight">#303030</color>
+    <color name="TextColorDay">#000000</color>
+    <color name="TextColorNight">#FFFFFF</color>
 </resources>
