@@ -27,23 +27,30 @@
         android:textColor="@color/black"
         />
 
-    <ListView
-        android:id="@+id/roomsListView"
-        android:layout_width="match_parent"
-        android:layout_below="@id/listHeaderTextView"
-        android:layout_height="270dp"
-        android:background="@drawable/rounded_light_grey_background"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        android:clipToPadding="false"/>
-
     <Button
         android:id="@+id/scanWifiButton"
         android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_below="@id/roomsListView"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_blue_background"
+        android:minHeight="48dp"
+        android:text="Start WiFi Scan"
         android:layout_margin="8dp"
-        android:text="Start WiFi Scan" />
+        android:layout_alignParentBottom="true" />
+
+    <ListView
+        android:id="@+id/roomsListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/listHeaderTextView"
+        android:layout_above="@id/scanWifiButton"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/rounded_light_grey_background"
+        android:clipToPadding="false"
+        android:padding="8dp" />
+
 </RelativeLayout>
+
