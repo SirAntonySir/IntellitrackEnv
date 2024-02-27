@@ -4,18 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp">
+    android:padding="4dp">
 
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="4dp"
         android:background="@drawable/rounded_grey_background"
         android:layout_margin="8dp">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
         android:src="@drawable/educationicon"
         android:layout_gravity="center" />
     </FrameLayout>
@@ -28,20 +28,52 @@
         android:layout_gravity="center_vertical"
         android:layout_marginStart="8dp">
 
-        <TextView
-            android:id="@+id/roomNumberTextView"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Room 357"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/wifiPredictionTextView"
+            <TextView
+                android:id="@+id/roomTextLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Room"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/roomNumberValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="1"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WiFi prediction: 90%"
-            android:textSize="14sp" /> <!-- Smaller text size for WiFi prediction -->
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/wifiPredictionLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WiFi prediction:"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/wifiPredictionValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="10%"
+                android:textSize="12sp"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

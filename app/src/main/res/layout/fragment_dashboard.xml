@@ -50,7 +50,7 @@
         android:layout_marginRight="8dp"
         android:background="@drawable/rounded_light_grey_background"
         android:clipToPadding="false"
-        android:padding="8dp" />
+        />
 
 </RelativeLayout>
 

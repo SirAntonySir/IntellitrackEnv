@@ -1,5 +1,9 @@
+//DashboardFragment.kt
 package com.example.intellitrackenv.ui.dashboard
 
+import DashboardViewModel
+import RoomItem
+import RoomItemAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,27 +15,44 @@ import com.example.intellitrackenv.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
 
-private var _binding: FragmentDashboardBinding? = null
-  // This property is only valid between onCreateView and
-  // onDestroyView.
-  private val binding get() = _binding!!
+    private var _binding: FragmentDashboardBinding? = null
 
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View {
-    val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+    private val binding get() = _binding!!
 
-    _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-    val root: View = binding.root
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 
+        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        val root: View = binding.root
 
-    return root
-  }
+        val adapter = RoomItemAdapter(requireContext(), emptyList())
+        binding.roomsListView.adapter = adapter
 
-override fun onDestroyView() {
+        binding.scanWifiButton.setOnClickListener {
+            performRoomScan()
+        }
+
+        // Observe the LiveData from the ViewModel
+        dashboardViewModel.rooms.observe(viewLifecycleOwner) { rooms ->
+            (binding.roomsListView.adapter as RoomItemAdapter).replaceItems(rooms)
+        }
+
+        return root
+    }
+
+    // Simulated scan function
+    private fun performRoomScan() {
+        // Simulate scanning process
+        val simulatedScanResult = listOf(RoomItem("459", "95%"))
+
+        // Update the UI
+        (binding.roomsListView.adapter as RoomItemAdapter).replaceItems(simulatedScanResult)
+
+        // Optionally, update the ViewModel if you need to reflect this change across other parts of the app
+        // dashboardViewModel.updateRooms(simulatedScanResult)
+    }
+
+    override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
