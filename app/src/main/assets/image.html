@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Image Viewer</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map { height: 400px; width: 600px; }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+    var map = L.map('map', {
+        crs: L.CRS.Simple,
+        minZoom: -5,
+    });
+
+    var bounds = [[0, 0], [1000, 1000]]; // Adjust based on the actual size of your image
+    var image = L.imageOverlay('file://drawable/floor4.svg', bounds).addTo(map);
+
+    map.fitBounds(bounds);
+
+    function setView(latitude, longitude, zoomLevel) {
+    map.setView([latitude, longitude], zoomLevel);
+}
+
+function zoomIn() {
+    map.zoomIn();
+}
+
+function zoomOut() {
+    map.zoomOut();
+}
+</script>
+
+</body>
+</html>

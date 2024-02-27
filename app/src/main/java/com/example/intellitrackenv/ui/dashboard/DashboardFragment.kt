@@ -12,19 +12,31 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.intellitrackenv.databinding.FragmentDashboardBinding
+import android.webkit.WebView
+import com.davemorrissey.labs.subscaleview.ImageSource
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+import com.example.intellitrackenv.R
+
 
 class DashboardFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
 
+
+
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
-
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // Set up the Subsampling Scale Image View
+        val imageView: SubsamplingScaleImageView = binding.imageScale // Assuming you have a SubsamplingScaleImageView with the ID ivLargeImage in your FragmentDashboardBinding
+        imageView.setImage(ImageSource.resource(R.drawable.floor4))
+
+
+        // Initialize your ViewModel, adapter, set up listeners, etc., as before
+        val dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
         val adapter = RoomItemAdapter(requireContext(), emptyList())
         binding.roomsListView.adapter = adapter
 
@@ -32,13 +44,14 @@ class DashboardFragment : Fragment() {
             performRoomScan()
         }
 
-        // Observe the LiveData from the ViewModel
         dashboardViewModel.rooms.observe(viewLifecycleOwner) { rooms ->
             (binding.roomsListView.adapter as RoomItemAdapter).replaceItems(rooms)
         }
 
         return root
     }
+
+
 
     // Simulated scan function
     private fun performRoomScan() {
