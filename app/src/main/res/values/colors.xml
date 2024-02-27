@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue_200">#FF12A3ED</color> <!-- Lighter blue -->
-    <color name="blue_500">#FF12A3ED</color> <!-- Normal blue -->
-    <color name="blue_700">#FF12A3ED</color> <!-- Darker blue -->
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="primaryDay">#42bec2</color> <!-- Lighter blue -->
+    <color name="secondaryDay">#929fdd</color> <!-- Normal blue -->
+    <color name="accentDay">#6c69ce</color> <!-- Darker blue -->
+    <color name="primaryNight">#3db8bd</color> <!-- Lighter blue -->
+    <color name="secondaryNight">#222f6d</color> <!-- Normal blue -->
+    <color name="accentNight">#343196</color> <!-- Darker blue -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#D3D3D3</color>
     <color name="light_grey">#EFEFEF</color>
-    <color name="BackgroundDay">#fafafa</color>
-    <color name="BackgroundNight">#303030</color>
-    <color name="TextColorDay">#000000</color>
+    <color name="BackgroundDay">#f0fafa</color>
+    <color name="BackgroundNight">#e4f7f7</color>
+    <color name="TextColorDay">#081b1b</color>
     <color name="TextColorNight">#FFFFFF</color>
+
+
 </resources>
