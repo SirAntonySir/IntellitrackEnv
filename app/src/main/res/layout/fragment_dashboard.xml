@@ -29,10 +29,7 @@
 
     <Button
         android:id="@+id/scanWifiButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_blue_background"
-        android:minHeight="48dp"
+        style="@style/ButtonStyle"
         android:text="Start WiFi Scan"
         android:layout_margin="8dp"
         android:layout_alignParentBottom="true" />
