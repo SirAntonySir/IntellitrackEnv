@@ -51,10 +51,11 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0") // This might need to be updated to 2.7.0 to match other lifecycle dependencies
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui:1.6.2") // specify the version here
+    debugImplementation("androidx.compose.ui:ui-tooling:1.6.2") // specify the version here
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material3:material3:1.2.0")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     testImplementation("junit:junit:4.13.2") // Duplicate, keep only one instance
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

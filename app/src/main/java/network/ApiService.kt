@@ -8,11 +8,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface ApiService {
+    @POST("api/data-collection/")
+    fun postWifiSession(@Header("Authorization") token: String, @Body wifiSession: WifiSession): Call<ResponseBody>
 
-    @POST("wifi_sessions")
-    fun postWifiSession(
-        @Header("Authorization") authToken: String,
-        @Body wifiSession: WifiSession
-    ): Call<ResponseBody>
 }
-

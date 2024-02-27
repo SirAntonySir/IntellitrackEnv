@@ -139,9 +139,11 @@ class HomeFragment : Fragment() {
         scanStartTime = System.currentTimeMillis()
         checkAndRequestPermissions()
         handler.post(scanRunnable)
+        Log.d("HomeFragment", "Scanning started")
     }
 
     private fun stopScanning() {
+        Log.d("HomeFragment", "Scanning stopped")
         isScanning = false
         fingerPrintSessionLabel.isEnabled = true
         scanButton.text = "Start Scanning"
@@ -211,7 +213,14 @@ class HomeFragment : Fragment() {
             return
         }
         Toast.makeText(requireContext(), "Scanning WiFi networks...", Toast.LENGTH_SHORT).show()
-        // Rest of your scanning logic...
+
+        val currentTimeMillis = System.currentTimeMillis()
+
+        wifiManager.startScan()
+        val currentScanResults = wifiManager.scanResults
+        Log.d("HomeFragment", "Scan results size: ${currentScanResults.size}")
+        accumulatedWifiLists.add(Pair(currentTimeMillis, currentScanResults)) // Store scan results with timestamp
+        updateUIWithLatestScan(currentScanResults)
     }
 
 
