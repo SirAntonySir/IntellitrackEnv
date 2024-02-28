@@ -90,7 +90,7 @@ class HomeFragment : Fragment() {
 
         // Initialize your ViewModel, adapter, set up listeners
         val dashboardViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        val adapter = ScanItemAdapter(requireContext(), emptyList())
+        val adapter = ScanItemAdapter(requireContext(), mutableListOf())
         binding.scansListView.adapter = adapter
 
         // Initialize other elements...
@@ -234,44 +234,19 @@ class HomeFragment : Fragment() {
 
 
     private fun updateUIWithLatestScan(scanResults: List<ScanResult>) {
-        /*val formattedScanResults = scanResults.map { scanResult ->
-            val distance = calculateDistance(scanResult.level, scanResult.frequency)
-            "📶 SSID: ${scanResult.SSID} \n" +
-                    "🔑 BSSID: ${scanResult.BSSID} \n" +
-                    "📡 Signal Strength: ${scanResult.level} dBm\n" +
-                    "🔊 Channel Bandwidth: ${channelWidthToString(scanResult.channelWidth)} \n" +
-                    "🌐 Frequency: ${scanResult.frequency} MHz \n"
-        }
-
-        val adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, formattedScanResults)
-        listView.adapter = adapter
-
-        */
         val scanItems = scanResults.map { scanResult ->
-            // Assuming the signal strength is what you meant by "95%" and should be the dBm value
-            //Log.d("listItemString", "scanResult: ${scanResult.level}")
-            ScanItem(scanResult.BSSID, scanResult.level.toString())
+            ScanItem(scanResult.BSSID, scanResult.SSID, scanResult.level.toString())
         }
 
-        // Assuming your ScanItemAdapter has a method to update its data set. If not, you'll set the adapter again.
-        val adapter = (binding.scansListView.adapter as? ScanItemAdapter)
+        val adapter = binding.scansListView.adapter as? ScanItemAdapter
         if (adapter == null) {
-            // First time setting the adapter
-            binding.scansListView.adapter = ScanItemAdapter(requireContext(), scanItems)
+            binding.scansListView.adapter = ScanItemAdapter(requireContext(), scanItems.toMutableList())
         } else {
-            // Adapter already exists, just update its data
-            adapter.clear()
-            adapter.addAll(scanItems)
-            adapter.notifyDataSetChanged()
+            adapter.updateItems(scanItems)
         }
     }
 
     private val _scans = MutableLiveData<List<ScanItem>>().apply {
-        value = listOf(
-            ScanItem("357", "90"),
-            ScanItem("358", "85")
-            // Initialize with default rooms or empty list
-        )
     }
 
     val rooms: LiveData<List<ScanItem>> = _scans

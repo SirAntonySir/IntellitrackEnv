@@ -35,12 +35,37 @@
             android:gravity="center_vertical">
 
             <TextView
+                android:id="@+id/ssidText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wifi:"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ssidTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="123456789"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
                 android:id="@+id/bssidText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="BSSID:"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textSize="12sp"
+                />
 
             <TextView
                 android:id="@+id/bssidTextView"
@@ -48,8 +73,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="123456789"
-                android:textSize="14sp"
-                android:textStyle="bold"
+                android:textSize="12sp"
+
                 />
         </LinearLayout>
 

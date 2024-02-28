@@ -1,2 +1,2 @@
 // RoomItem.kt
-data class ScanItem(val scanBSSID: String, val scanValue: String)
+data class ScanItem(val scanBSSID: String,val scanSsid: String, val scanValue: String)
