@@ -33,7 +33,13 @@ import androidx.core.content.ContextCompat
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import android.Manifest
+import androidx.lifecycle.lifecycleScope
 import com.example.intellitrackenv.R
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import network.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -114,32 +120,28 @@ class DashboardFragment : Fragment() {
     }
 
 
-    private fun sendSerializedData() {
+    private suspend fun sendSerializedData(): String = withContext(Dispatchers.IO) {
         val apiService = createRetrofitService()
 
-        // Assuming you have filled the WifiSession object with your data
-        val myRoomPrediction = serializeWifiSession(); // Create and fill your WifiSession object here
+        // Create and fill your WifiSession object here
+        val myRoomPrediction = serializeWifiSession()
 
-        Log.d("REQUESTabc", myRoomPrediction.toString())
-        apiService.postRoomPrediction("Token django-insecure-ootl(_y(mf@_mu34d8cw5h3l54vbrkcfcl1!de5_jrj=1a\$ehk", myRoomPrediction).enqueue(object :
-            Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
-                    Log.d("PostSuccess", "Successfully posted session data: ${response.body()?.string()}")
+        try {
+            val response = apiService.postRoomPrediction("Token django-insecure-ootl(_y(mf@_mu34d8cw5h3l54vbrkcfcl1!de5_jrj=1a\$ehk", myRoomPrediction).execute()
 
-                    // Clear accumulated Wifi scan results after successful post
-                    accumulatedWifiLists.clear()
-                } else {
-                    Log.e("PostError", "Failed to post session data: ${response.errorBody()?.string()}")
-                    accumulatedWifiLists.clear()
-                }
+            if (response.isSuccessful) {
+                // Clear accumulated Wifi scan results after successful post
+                accumulatedWifiLists.clear()
+                // Assuming the response body contains a string prediction
+                response.body()?.string() ?: "Error: Empty response"
+            } else {
+                "Error: ${response.errorBody()?.string()}"
             }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.e("NetworkError", "Network call failed", t)
-            }
-        })
+        } catch (e: Exception) {
+            "Error: ${e.message}"
+        }
     }
+
 
     private fun createRetrofitService(): ApiService {
         val logging = HttpLoggingInterceptor().apply {
@@ -161,44 +163,47 @@ class DashboardFragment : Fragment() {
         if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
         } else {
-            // Start WiFi scan
-        scanWifiNetworks()
+            scanWifiNetworks()
         }
-
-        // Simulate scanning process
-        val simulatedScanResult = listOf(RoomItem("459", "95%"))
-
-        // Update the UI
-        (binding.roomsListView.adapter as RoomItemAdapter).replaceItems(simulatedScanResult)
-
-
     }
 
     private fun scanWifiNetworks() {
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return
         }
-        Toast.makeText(requireContext(), "performed Scan", Toast.LENGTH_SHORT).show()
 
-        val currentTimeMillis = System.currentTimeMillis()
-
+        // Start WiFi scan
         wifiManager.startScan()
         val currentScanResults = wifiManager.scanResults
+        val currentTimeMillis = System.currentTimeMillis()
         accumulatedWifiLists.add(Pair(currentTimeMillis, currentScanResults))
 
-        // Convert the results to your RoomItem format and update UI
-        val roomItems = currentScanResults.map { scanResult ->
-            RoomItem(scanResult.BSSID, "${scanResult.level}%")
+        // Use coroutine to handle asynchronous task
+        lifecycleScope.launch {
+            val predictionResponseJson = sendSerializedData() // This should return a JSON string
+
+            Log.d("PREDICTION", predictionResponseJson)
+
+            // Use Gson to parse the JSON string into a Map
+            val gson = Gson()
+            val type = object : TypeToken<Map<String, Double>>() {}.type
+            val predictionResponse: Map<String, Double> = gson.fromJson(predictionResponseJson, type)
+
+            // Convert the Map into a list of RoomItem objects and sort them by descending prediction scores
+            val simulatedScanResult = predictionResponse.map { entry ->
+                RoomItem("Room ${entry.key}", "${(entry.value * 100).toInt()}%")
+            }.sortedByDescending { item ->
+                // Correctly extracting the numerical value for sorting
+                item.wifiPrediction.trimEnd('%').toInt()
+            }
+
+            // Ensure UI updates are performed on the main thread
+            withContext(Dispatchers.Main) {
+                // Update the UI with the new simulatedScanResult
+                (binding.roomsListView.adapter as RoomItemAdapter).replaceItems(simulatedScanResult)
+            }
         }
 
-        // Update the UI
-        (binding.roomsListView.adapter as RoomItemAdapter).replaceItems(roomItems)
-
-        // Send the results to the backend
-        sendSerializedData()// Store scan results with timestamp
-    }
-
-    private fun processScanResults() {
 
     }
 

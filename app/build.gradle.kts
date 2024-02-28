@@ -67,6 +67,11 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
     implementation("com.davemorrissey.labs:subsampling-scale-image-view:3.10.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+    implementation ("com.google.code.gson:gson:2.10")
+
+
 
 
 }
