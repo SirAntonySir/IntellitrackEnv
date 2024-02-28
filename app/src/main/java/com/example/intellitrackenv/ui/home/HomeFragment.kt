@@ -148,6 +148,7 @@ class HomeFragment : Fragment() {
         scanStartTime = System.currentTimeMillis()
         checkAndRequestPermissions()
         handler.post(scanRunnable)
+        binding.countdownText.visibility = View.VISIBLE
         Log.d("HomeFragment", "Scanning started")
     }
 
@@ -159,6 +160,8 @@ class HomeFragment : Fragment() {
         scanEndTime = System.currentTimeMillis()
         sendSerializedData()
         handler.removeCallbacks(scanRunnable)
+        handler.removeCallbacks(countdownRunnable)
+        binding.countdownText.visibility = View.GONE
     }
 
     private fun createRetrofitService(): ApiService {

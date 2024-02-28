@@ -31,10 +31,4 @@ class ScanItemAdapter(context: Context, scanItems: MutableList<ScanItem>) : Arra
 
         return itemView
         }
-
-        /*fun replaceItems(items: List<ScanItem>) {
-        mScans.clear()
-        mScans.addAll(items)
-        notifyDataSetChanged()
-        }*/
         }

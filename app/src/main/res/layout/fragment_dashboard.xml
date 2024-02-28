@@ -22,13 +22,12 @@
     <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
         android:id="@+id/imageScale"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="550dp"
         android:padding="16dp"
         android:layout_alignParentTop="true"
-        android:background="?attr/colorPrimaryVariant"/>
+        android:background="@color/white"/>
 
 </androidx.cardview.widget.CardView>
-
 
 
 <TextView

@@ -4,6 +4,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/labelText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="8dp">
+
+            <TextView
+                android:id="@+id/wifi_fingerprints_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Add Wifi Fingerprints"
+                android:textSize="18sp"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/countdownText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                />
+
+        </LinearLayout>
+
+    <ListView
+        android:id="@+id/scansListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/sessionLabelInput"
+        android:layout_below="@+id/labelText"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/rounded_light_grey_background"
+        android:clipToPadding="false"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
     <EditText
         android:id="@+id/sessionLabelInput"
         style="@style/EditTextStyle"
@@ -11,51 +55,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:hint="Enter session ID"
-        android:inputType="text" />
-
-    <TextView
-        android:id="@+id/wifi_fingerprints_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/sessionLabelInput"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginLeft="8dp"
-        android:text="Wifi Fingerprints"
-        />
-
-    <TextView
-        android:id="@+id/countdownText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/sessionLabelInput"
-        android:layout_toEndOf="@id/wifi_fingerprints_label"
-        android:layout_marginStart="150dp"
-        />
-
-    <ListView
-        android:id="@+id/scansListView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
         android:layout_above="@+id/btnScanWifi"
-        android:layout_below="@+id/sessionLabelInput"
-        android:layout_marginTop="35dp"
-        android:layout_marginBottom="-234dp"
-        android:cacheColorHint="#00FFFFFF"
-        android:text="Wifi Fingerprints"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Enter Room ID"
+        android:background="@drawable/rounded_light_grey_background"
+        android:inputType="text" />
 
 
     <Button
         android:id="@+id/btnScanWifi"
         style="@style/ButtonStyle"
         android:text="Start Session Scan"
-        android:layout_margin="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
