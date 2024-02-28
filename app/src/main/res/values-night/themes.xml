@@ -11,6 +11,8 @@
         <item name="colorOnPrimary">@color/black</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="colorAccent">@color/accentNight</item>
+        <item name="colorPrimaryVariant">@color/ListNight</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/BackgroundNight</item>
         <item name="android:windowLightStatusBar">false</item>
