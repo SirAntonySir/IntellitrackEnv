@@ -18,14 +18,16 @@ data class CollectedSignal(
 )
 
 @Serializable
+data class RoomPrediction(
+    val phone_id: String,
+    val android_version: String,
+    val wifi_signals: List<WifiSignal>
+)
+
+@Serializable
 data class WifiSignal(
     val SSID: String,
     val BSSID: String,
     val level: Int,
     val frequency: Int,
-    val channelWidth: Int,
-    val centerFreq0: Int,
-    val centerFreq1: Int,
-    val standard: String? = null,
-    val interface_name: String? = null
 )

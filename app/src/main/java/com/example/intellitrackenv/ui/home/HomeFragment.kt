@@ -269,21 +269,6 @@ class HomeFragment : Fragment() {
         _scans.value = currentList
     }
 
-    private fun calculateDistance(level: Int, frequency: Int): Double {
-        // Placeholder for your distance calculation logic
-        return 0.0 // Replace with actual distance calculation
-    }
-
-    private fun channelWidthToString(channelWidth: Int): String {
-        return when (channelWidth) {
-            ScanResult.CHANNEL_WIDTH_20MHZ -> "20 MHz"
-            ScanResult.CHANNEL_WIDTH_40MHZ -> "40 MHz"
-            ScanResult.CHANNEL_WIDTH_80MHZ -> "80 MHz"
-            ScanResult.CHANNEL_WIDTH_160MHZ -> "160 MHz"
-            ScanResult.CHANNEL_WIDTH_80MHZ_PLUS_MHZ -> "80+80 MHz"
-            else -> "Unknown"
-        }
-    }
 
     private fun serializeWifiSession(): WifiSession {
         val sessionLabel = fingerPrintSessionLabel.text.toString()
@@ -302,10 +287,7 @@ class HomeFragment : Fragment() {
                     SSID = scanResult.SSID.takeIf { it?.isNotEmpty() == true } ?: "NO_SSID",
                     BSSID = scanResult.BSSID,
                     level = scanResult.level,
-                    frequency = scanResult.frequency,
-                    channelWidth = scanResult.channelWidth,
-                    centerFreq0 = scanResult.centerFreq0,
-                    centerFreq1 = scanResult.centerFreq1
+                    frequency = scanResult.frequency
                 )
             }
             CollectedSignal(scanTimeFormatted, wifiSignals)
