@@ -9,9 +9,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#D3D3D3</color>
-    <color name="light_grey">#EFEFEF</color>
     <color name="BackgroundDay">#f0fafa</color>
     <color name="BackgroundNight">#e4f7f7</color>
+    <color name="ListDay">#EFEFEF</color>
+    <color name="ListNight">#4C4C4C</color>
     <color name="TextColorDay">#081b1b</color>
     <color name="TextColorNight">#FFFFFF</color>
 

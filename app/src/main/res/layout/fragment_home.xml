@@ -15,7 +15,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:hint="Enter session ID"
-        android:inputType="number" />
+        android:inputType="text" />
 
     <TextView
         android:id="@+id/wifi_fingerprints_label"

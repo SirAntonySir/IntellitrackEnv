@@ -5,23 +5,40 @@
     android:layout_height="match_parent"
     >
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewMap"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        android:background="?attr/colorPrimaryVariant">
+
     <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
         android:id="@+id/imageScale"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:padding="8dp"
+        android:padding="16dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="8dp" />
+        android:background="?attr/colorPrimaryVariant"/>
+
+</androidx.cardview.widget.CardView>
 
 
-    <TextView
+
+<TextView
         android:id="@+id/listHeaderTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Rooms"
         android:gravity="bottom|start"
         android:textSize="18sp"
-        android:layout_below="@id/imageScale"
+        android:layout_below="@id/cardViewMap"
         android:layout_marginTop="24dp"
         android:paddingLeft="8dp"
         />
