@@ -1,6 +1,8 @@
 package com.example.intellitrackenv.ui.home
 
 import CollectedSignal
+import ScanItem
+import ScanItemAdapter
 import WifiSession
 import WifiSignal
 import android.os.Bundle
@@ -29,6 +31,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -76,13 +80,18 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         wifiManager = requireContext().applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        listView = binding.lvWifiNetworks
+        listView = binding.scansListView
         fingerPrintSessionLabel = binding.sessionLabelInput
         scanButton = binding.btnScanWifi
 
         scanButton.setOnClickListener {
             handleScanButtonClick()
         }
+
+        // Initialize your ViewModel, adapter, set up listeners
+        val dashboardViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        val adapter = ScanItemAdapter(requireContext(), emptyList())
+        binding.scansListView.adapter = adapter
 
         // Initialize other elements...
     }
@@ -225,7 +234,7 @@ class HomeFragment : Fragment() {
 
 
     private fun updateUIWithLatestScan(scanResults: List<ScanResult>) {
-        val formattedScanResults = scanResults.map { scanResult ->
+        /*val formattedScanResults = scanResults.map { scanResult ->
             val distance = calculateDistance(scanResult.level, scanResult.frequency)
             "📶 SSID: ${scanResult.SSID} \n" +
                     "🔑 BSSID: ${scanResult.BSSID} \n" +
@@ -236,6 +245,53 @@ class HomeFragment : Fragment() {
 
         val adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, formattedScanResults)
         listView.adapter = adapter
+
+        */
+        val scanItems = scanResults.map { scanResult ->
+            // Assuming the signal strength is what you meant by "95%" and should be the dBm value
+            //Log.d("listItemString", "scanResult: ${scanResult.level}")
+            ScanItem(scanResult.BSSID, scanResult.level.toString())
+        }
+
+        // Assuming your ScanItemAdapter has a method to update its data set. If not, you'll set the adapter again.
+        val adapter = (binding.scansListView.adapter as? ScanItemAdapter)
+        if (adapter == null) {
+            // First time setting the adapter
+            binding.scansListView.adapter = ScanItemAdapter(requireContext(), scanItems)
+        } else {
+            // Adapter already exists, just update its data
+            adapter.clear()
+            adapter.addAll(scanItems)
+            adapter.notifyDataSetChanged()
+        }
+    }
+
+    private val _scans = MutableLiveData<List<ScanItem>>().apply {
+        value = listOf(
+            ScanItem("357", "90"),
+            ScanItem("358", "85")
+            // Initialize with default rooms or empty list
+        )
+    }
+
+    val rooms: LiveData<List<ScanItem>> = _scans
+
+    // Function to update the list of rooms
+    fun updateRooms(newRooms: List<ScanItem>) {
+        _scans.value = newRooms
+    }
+
+    // Function to add a single room
+    fun addRoom(room: ScanItem) {
+        val currentList = _scans.value?.toMutableList() ?: mutableListOf()
+        currentList.add(room)
+        _scans.value = currentList
+    }
+
+    fun removeRoom(room: ScanItem) {
+        val currentList = _scans.value?.toMutableList()
+        currentList?.remove(room)
+        _scans.value = currentList
     }
 
     private fun calculateDistance(level: Int, frequency: Int): Double {

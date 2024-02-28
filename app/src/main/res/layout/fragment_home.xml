@@ -39,7 +39,7 @@
         />
 
     <ListView
-        android:id="@+id/lvWifiNetworks"
+        android:id="@+id/scansListView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_above="@+id/btnScanWifi"

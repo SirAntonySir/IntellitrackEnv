@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- list_item_room.xml -->
+<!-- scan_list_item.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -35,21 +35,46 @@
             android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/roomTextLabel"
+                android:id="@+id/bssidText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Room"
+                android:text="BSSID:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/roomNumberValue"
+                android:id="@+id/bssidTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="1"
+                android:text="123456789"
                 android:textSize="14sp"
                 android:textStyle="bold"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/signalStrengthText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Signal Strength:"
+                android:textSize="12sp"
+                 />
+
+            <TextView
+                android:id="@+id/signalStrengthTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="-10"
+                android:textSize="12sp"
+
                 />
         </LinearLayout>
 

@@ -35,7 +35,7 @@ class DashboardFragment : Fragment() {
         imageView.setImage(ImageSource.resource(R.drawable.floor4))
 
 
-        // Initialize your ViewModel, adapter, set up listeners, etc., as before
+        // Initialize your ViewModel, adapter, set up listeners
         val dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
         val adapter = RoomItemAdapter(requireContext(), emptyList())
         binding.roomsListView.adapter = adapter
