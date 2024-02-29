@@ -86,7 +86,7 @@ class DashboardFragment : Fragment() {
         val root: View = binding.root
 
         // Set up the Subsampling Scale Image View
-        val imageView: SubsamplingScaleImageView = binding.imageScale
+        val imageView: SubsamplingScaleImageView = binding.imageView
         imageView.setImage(ImageSource.resource(R.drawable.floor3))
         highlightButton(binding.buttonFloor3)
 
@@ -303,11 +303,11 @@ class DashboardFragment : Fragment() {
                     withContext(Dispatchers.Main) {
                         when (floor) {
                             3 -> {
-                                binding.imageScale.setImage(ImageSource.resource(R.drawable.floor3))
+                                binding.imageView.setImage(ImageSource.resource(R.drawable.floor3))
                                 highlightButton(binding.buttonFloor3)
                             }
                             4 -> {
-                                binding.imageScale.setImage(ImageSource.resource(R.drawable.floor4))
+                                binding.imageView.setImage(ImageSource.resource(R.drawable.floor4))
                                 highlightButton(binding.buttonFloor4)
                             }
                             else -> Toast.makeText(context, "Floor not found", Toast.LENGTH_SHORT).show()
@@ -325,12 +325,12 @@ class DashboardFragment : Fragment() {
 
 
         binding.buttonFloor3.setOnClickListener {
-            binding.imageScale.setImage(ImageSource.resource(R.drawable.floor3))
+            binding.imageView.setImage(ImageSource.resource(R.drawable.floor3))
             highlightButton(it as Button)
         }
 
         binding.buttonFloor4.setOnClickListener {
-            binding.imageScale.setImage(ImageSource.resource(R.drawable.floor4))
+            binding.imageView.setImage(ImageSource.resource(R.drawable.floor4))
             highlightButton(it as Button)
         }
     }
@@ -375,10 +375,6 @@ class DashboardFragment : Fragment() {
 
         }
     }
-
-
-
-
 
 
     override fun onDestroyView() {
