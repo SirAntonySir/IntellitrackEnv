@@ -36,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Rooms"
+        android:fontFamily="@font/varela_round_regular"
         android:gravity="bottom|start"
         android:textSize="18sp"
         android:layout_below="@id/cardViewMap"
@@ -48,7 +49,9 @@
         style="@style/ButtonStyle"
         android:text="Start WiFi Scan"
         android:layout_margin="8dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:fontFamily="@font/varela_round_regular"
+        />
 
     <ListView
         android:id="@+id/roomsListView"

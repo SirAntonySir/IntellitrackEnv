@@ -38,6 +38,7 @@
                 android:id="@+id/ssidText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/varela_round_regular"
                 android:text="Wifi:"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -47,6 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:fontFamily="@font/varela_round_regular"
                 android:text="123456789"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -63,6 +65,7 @@
                 android:id="@+id/bssidText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/varela_round_regular"
                 android:text="BSSID:"
                 android:textSize="12sp"
                 />
@@ -71,6 +74,8 @@
                 android:id="@+id/bssidTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/varela_round_regular"
+
                 android:layout_marginStart="4dp"
                 android:text="123456789"
                 android:textSize="12sp"
@@ -90,7 +95,9 @@
                 android:layout_height="wrap_content"
                 android:text="Signal Strength:"
                 android:textSize="12sp"
-                 />
+                android:fontFamily="@font/varela_round_regular"
+
+                />
 
             <TextView
                 android:id="@+id/signalStrengthTextView"
@@ -99,7 +106,7 @@
                 android:layout_marginStart="4dp"
                 android:text="-10"
                 android:textSize="12sp"
-
+                android:fontFamily="@font/varela_round_regular"
                 />
         </LinearLayout>
 
