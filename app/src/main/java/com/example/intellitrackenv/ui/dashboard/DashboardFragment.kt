@@ -34,6 +34,7 @@ import androidx.core.content.ContextCompat
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import android.Manifest
+import android.graphics.PointF
 import android.os.Handler
 import android.os.Looper
 import android.widget.Button
@@ -123,8 +124,6 @@ class DashboardFragment : Fragment() {
             }, 2000)
         }
 
-
-
         dashboardViewModel.rooms.observe(viewLifecycleOwner) { rooms ->
             (binding.roomsListView.adapter as RoomItemAdapter).replaceItems(rooms)
         }
@@ -202,6 +201,7 @@ class DashboardFragment : Fragment() {
         return retrofit.create(ApiService::class.java)
     }
 
+
     // Simulated scan function
     private fun performRoomScan() {
         if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -210,6 +210,7 @@ class DashboardFragment : Fragment() {
             scanWifiNetworks()
         }
     }
+
 
     private fun scanWifiNetworks() {
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -281,13 +282,29 @@ class DashboardFragment : Fragment() {
         binding.buttonFloor3.setOnClickListener {
             binding.imageScale.setImage(ImageSource.resource(R.drawable.floor3))
             highlightButton(it as Button)
+            hideMarker()
         }
 
         binding.buttonFloor4.setOnClickListener {
             binding.imageScale.setImage(ImageSource.resource(R.drawable.floor4))
             highlightButton(it as Button)
+            hideMarker()
         }
+
+        // Set up the listener here
+        binding.imageScale.setOnStateChangedListener(object : SubsamplingScaleImageView.OnStateChangedListener {
+            override fun onScaleChanged(newScale: Float, origin: Int) {
+                // Hide the marker when the image is zoomed
+                hideMarker()
+            }
+
+            override fun onCenterChanged(newCenter: PointF?, origin: Int) {
+                // Hide the marker when the image is dragged
+                hideMarker()
+            }
+        })
     }
+
 
     private fun highlightButton(activeButton: Button) {
         // Reset styles for all floor buttons to default
@@ -298,35 +315,35 @@ class DashboardFragment : Fragment() {
         activeButton.setBackgroundResource(R.drawable.highlighted_button_background)
     }
 
-    private fun determineFloor(roomNumber: Int): Int {
-        return roomNumber
+    private fun hideMarker() {
+        binding.markerView.visibility = View.GONE
+    }
+
+    private fun showMarker() {
+        binding.markerView.visibility = View.VISIBLE
     }
 
     private fun positionMarker(roomNumber: String) {
-        Log.d("Debug", "Vor dem Aufruf von positionMarker mit Raumnummer: ${roomNumber}")
-
         val coordinatesMap = mapOf(
-            "unsure" to Pair(250, 885),
             "357" to Pair(250, 885),
-            "355" to Pair(200, 100),
-            "350" to Pair(400, 500),
-            "450" to Pair(350, 500),
+            "350" to Pair(250, 1120),
+            "355" to Pair(250, 960),
+            "450" to Pair(250, 1110),
+            "459A" to Pair(225, 750),
+            "454A" to Pair(350, 940),
+            "353" to Pair(250, 1010),
+            "351" to Pair(350, 940),
+            //"357" to Pair(250, 885),
         )
-
-
         coordinatesMap[roomNumber]?.let { coordinates ->
             val marker: ImageView = binding.markerView
             val layoutParams = marker.layoutParams as RelativeLayout.LayoutParams
 
-            // Position des Markers aktualisieren
             layoutParams.leftMargin = coordinates.first
             layoutParams.topMargin = coordinates.second
             marker.layoutParams = layoutParams
 
-            // Marker sichtbar machen
             marker.visibility = View.VISIBLE
-            Log.d("MarkerPosition", "Positioning marker at: ${coordinates.first}, ${coordinates.second}")
-
         }
     }
 
