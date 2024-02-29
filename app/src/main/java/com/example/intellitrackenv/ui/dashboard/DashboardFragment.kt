@@ -28,11 +28,14 @@ import com.example.intellitrackenv.databinding.FragmentDashboardBinding
 import android.webkit.WebView
 import android.widget.EditText
 import android.widget.Toast
+
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import android.Manifest
+import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -60,6 +63,7 @@ import java.util.TimeZone
 
 class DashboardFragment : Fragment() {
 
+    private val handler = Handler(Looper.getMainLooper())
     private var _binding: FragmentDashboardBinding? = null
     private val accumulatedWifiLists: MutableList<Pair<Long, List<ScanResult>>> = mutableListOf()
     private lateinit var wifiManager: WifiManager
@@ -84,6 +88,17 @@ class DashboardFragment : Fragment() {
 
         binding.scanWifiButton.setOnClickListener {
             performRoomScan()
+            val button = binding.scanWifiButton
+
+            button.text = "Send data"
+
+            handler.postDelayed({
+                button.text = "recieve prediction" // Replace with your original button text
+            }, 500)
+
+            handler.postDelayed({
+                button.text = "Start Room Prediction" // Replace with your original button text
+            }, 1000)
         }
 
         dashboardViewModel.rooms.observe(viewLifecycleOwner) { rooms ->

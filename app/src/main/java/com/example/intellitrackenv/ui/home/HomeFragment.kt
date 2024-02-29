@@ -130,7 +130,11 @@ class HomeFragment : Fragment() {
         val fingerPrintSessionIDText = fingerPrintSessionLabel.text.toString()
         if (!isScanning) {
             if (fingerPrintSessionIDText.isEmpty()) {
-                Toast.makeText(requireContext(), "Please enter the session ID.", Toast.LENGTH_SHORT).show()
+                scanButton.text = "Please enter the Session ID"
+
+                handler.postDelayed({
+                    scanButton.text = "Start Scanning" // Replace with your original button text
+                }, 2000)
             }
             else {
                 startScanning()
@@ -224,7 +228,9 @@ class HomeFragment : Fragment() {
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return
         }
-        Toast.makeText(requireContext(), "Scanning WiFi networks...", Toast.LENGTH_SHORT).show()
+
+        // Change the button text
+        scanButton.text = "Scanning..."
 
         val currentTimeMillis = System.currentTimeMillis()
 
@@ -233,7 +239,13 @@ class HomeFragment : Fragment() {
         Log.d("HomeFragment", "Scan results size: ${currentScanResults.size}")
         accumulatedWifiLists.add(Pair(currentTimeMillis, currentScanResults)) // Store scan results with timestamp
         updateUIWithLatestScan(currentScanResults)
+
+        // Revert the button text back to the original after 2 seconds
+        handler.postDelayed({
+            scanButton.text = "Stop Scanning" // Replace with your original button text
+        }, 2000) // 2000 milliseconds delay
     }
+
 
 
     private fun updateUIWithLatestScan(scanResults: List<ScanResult>) {

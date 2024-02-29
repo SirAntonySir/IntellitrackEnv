@@ -16,6 +16,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:fontFamily="@font/varela_round_regular"
                 android:text="Add Wifi Fingerprints"
                 android:textSize="18sp"
                 />
@@ -30,6 +31,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
+                android:fontFamily="@font/varela_round_regular"
+
                 />
 
         </LinearLayout>
@@ -59,6 +62,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:hint="Enter Room ID"
+        android:fontFamily="@font/varela_round_regular"
         android:background="@drawable/rounded_light_grey_background"
         android:inputType="text" />
 
@@ -66,6 +70,7 @@
     <Button
         android:id="@+id/btnScanWifi"
         style="@style/ButtonStyle"
+        android:fontFamily="@font/varela_round_regular"
         android:text="Start Session Scan"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"

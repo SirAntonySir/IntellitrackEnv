@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryDay">#42bec2</color> <!-- Lighter blue -->
-    <color name="secondaryDay">#929fdd</color> <!-- Normal blue -->
-    <color name="accentDay">#6c69ce</color> <!-- Darker blue -->
-    <color name="primaryNight">#3db8bd</color> <!-- Lighter blue -->
-    <color name="secondaryNight">#222f6d</color> <!-- Normal blue -->
-    <color name="accentNight">#343196</color> <!-- Darker blue -->
+    <!-- DAY Theme Colors -->
+    <color name="primaryDay">#00873f</color> <!-- Primary Green -->
+    <color name="secondaryDay">#66b478</color> <!-- Lighter Green for secondary -->
+    <color name="accentDay">#005c2e</color> <!-- Darker Green for accent -->
+    <color name="BackgroundDay">#f0fff0</color> <!-- Very light green background -->
+    <color name="ListDay">#E0E0E0</color> <!-- Grey for lists -->
+    <color name="TextColorDay">#004d26</color> <!-- Dark green for text -->
+
+    <!-- NIGHT Theme Colors -->
+    <color name="primaryNight">#00873f</color> <!-- Primary Green -->
+    <color name="secondaryNight">#66b478</color> <!-- Lighter Green for secondary -->
+    <color name="accentNight">#005c2e</color> <!-- Darker Green for accent -->
+    <color name="BackgroundNight">#e4f7e7</color> <!-- Slightly darker green background for night -->
+    <color name="ListNight">#4C4C4C</color> <!-- Grey for lists, darker for night -->
+    <color name="TextColorNight">#e0f2e9</color> <!-- Light green for text -->
+
+    <!-- Neutral Colors (Unchanged) -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#D3D3D3</color>
-    <color name="BackgroundDay">#f0fafa</color>
-    <color name="BackgroundNight">#e4f7f7</color>
-    <color name="ListDay">#EFEFEF</color>
-    <color name="ListNight">#4C4C4C</color>
-    <color name="TextColorDay">#081b1b</color>
-    <color name="TextColorNight">#FFFFFF</color>
-
-
 </resources>
