@@ -104,7 +104,7 @@ class DashboardFragment : Fragment() {
             // Start countdown after 1 second delay to match your flow
             handler.postDelayed({
                 // Initialize countdown duration (30 seconds)
-                var countdown = 2
+                var countdown = 28
                 val countdownTask = object : Runnable {
                     override fun run() {
                         if (countdown > 0) {
