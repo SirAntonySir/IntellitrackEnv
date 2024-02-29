@@ -4,6 +4,8 @@
         <selector>
             <!-- Pressed state -->
             <item android:drawable="@drawable/rounded_secondary_blue_background" android:state_pressed="true"/>
+            <!-- Disabled state -->
+            <item android:drawable="@drawable/rounded_disabled_background" android:state_enabled="false"/>
             <!-- Default state -->
             <item android:drawable="@drawable/rounded_blue_background"/>
         </selector>

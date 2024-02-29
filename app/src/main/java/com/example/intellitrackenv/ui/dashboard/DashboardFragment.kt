@@ -42,6 +42,7 @@ import com.example.intellitrackenv.R
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import network.ApiService
@@ -88,16 +89,39 @@ class DashboardFragment : Fragment() {
             performRoomScan()
             val button = binding.scanWifiButton
 
+            // Disable the button immediately
+            button.isEnabled = false
+
+            // Update the button text initially
             button.text = "Send data"
 
             handler.postDelayed({
-                button.text = "recieve prediction" // Replace with your original button text
-            }, 500)
+                button.text = "Receive prediction" // Corrected typo in "receive"
+            }, 2000)
 
+            // Start countdown after 1 second delay to match your flow
             handler.postDelayed({
-                button.text = "Start Room Prediction" // Replace with your original button text
-            }, 1000)
+                // Initialize countdown duration (30 seconds)
+                var countdown = 2
+                val countdownTask = object : Runnable {
+                    override fun run() {
+                        if (countdown > 0) {
+                            button.text = "Disabled for $countdown seconds"
+                            countdown--
+                            handler.postDelayed(this, 1000) // Schedule this task to run again after 1 second
+                        } else {
+                            // Re-enable the button and set the text back after countdown finishes
+                            button.isEnabled = true
+                            button.text = "Start Room Prediction"
+                        }
+                    }
+                }
+                // Start the countdown task immediately (after initial 1 second delay to match your setup)
+                handler.post(countdownTask)
+            }, 2000)
         }
+
+
 
         dashboardViewModel.rooms.observe(viewLifecycleOwner) { rooms ->
             (binding.roomsListView.adapter as RoomItemAdapter).replaceItems(rooms)
@@ -152,6 +176,7 @@ class DashboardFragment : Fragment() {
                 // Assuming the response body contains a string prediction
                 response.body()?.string() ?: "Error: Empty response"
             } else {
+                accumulatedWifiLists.clear()
                 "Error: ${response.errorBody()?.string()}"
             }
         } catch (e: Exception) {
@@ -189,16 +214,17 @@ class DashboardFragment : Fragment() {
             return
         }
 
-        // Start WiFi scan
-        wifiManager.startScan()
-        val currentScanResults = wifiManager.scanResults
-        val currentTimeMillis = System.currentTimeMillis()
-        accumulatedWifiLists.add(Pair(currentTimeMillis, currentScanResults))
-
-        // Use coroutine to handle asynchronous task
+        // Use coroutine to initiate delay and handle asynchronous task
         lifecycleScope.launch {
-            val predictionResponseJson = sendSerializedData() // This should return a JSON string
+            // Start WiFi scan
+            wifiManager.startScan()
+            delay(2000) // Delay for 2 seconds
+            val currentScanResults = wifiManager.scanResults
+            val currentTimeMillis = System.currentTimeMillis()
+            accumulatedWifiLists.clear() // Clear existing entries
+            accumulatedWifiLists.add(Pair(currentTimeMillis, currentScanResults)) // Add the latest entry
 
+            val predictionResponseJson = sendSerializedData() // This should return a JSON string
             Log.d("PREDICTION", predictionResponseJson)
 
             // Use Gson to parse the JSON string into a Map
@@ -220,9 +246,8 @@ class DashboardFragment : Fragment() {
                 (binding.roomsListView.adapter as RoomItemAdapter).replaceItems(simulatedScanResult)
             }
         }
-
-
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

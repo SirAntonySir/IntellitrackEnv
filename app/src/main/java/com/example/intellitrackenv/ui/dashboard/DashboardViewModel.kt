@@ -6,11 +6,8 @@ import androidx.lifecycle.ViewModel
 class DashboardViewModel : ViewModel() {
 
     private val _rooms = MutableLiveData<List<RoomItem>>().apply {
-        value = listOf(
-            RoomItem("357", "90%"),
-            RoomItem("358", "85%")
-            // Initialize with default rooms or empty list
-        )
+
+
     }
 
     val rooms: LiveData<List<RoomItem>> = _rooms
