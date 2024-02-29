@@ -24,7 +24,7 @@
             android:layout_height="wrap_content">
 
             <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
-                android:id="@+id/imageScale"
+                android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="450dp"
                 android:layout_alignParentTop="true"
@@ -35,7 +35,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/person_pin_circle"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/buttonFloor4"

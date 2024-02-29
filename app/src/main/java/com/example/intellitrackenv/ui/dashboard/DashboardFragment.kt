@@ -35,6 +35,7 @@ import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import android.Manifest
 import android.graphics.PointF
+import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
 import android.widget.Button
@@ -61,6 +62,10 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.view.ScaleGestureDetector
+import kotlin.math.abs
 
 
 class DashboardFragment : Fragment() {
@@ -70,6 +75,10 @@ class DashboardFragment : Fragment() {
     private val accumulatedWifiLists: MutableList<Pair<Long, List<ScanResult>>> = mutableListOf()
     private lateinit var wifiManager: WifiManager
     private val LOCATION_PERMISSION_REQUEST_CODE = 100
+    // Initialize a variable to hold the previous scan results, focusing on BSSID and level
+    private var previousScanResultsMap: Map<String, Int> = emptyMap()
+
+
 
     private val binding get() = _binding!!
 
@@ -140,6 +149,7 @@ class DashboardFragment : Fragment() {
             timeZone = TimeZone.getTimeZone("Europe/Berlin")
         }
 
+
         // You need to flatten the list of pairs into a single list of WifiSignals
         val wifiSignals = accumulatedWifiLists.flatMap { (scanTimestamp, wifiList) ->
             wifiList.map { scanResult ->
@@ -201,7 +211,6 @@ class DashboardFragment : Fragment() {
         return retrofit.create(ApiService::class.java)
     }
 
-
     // Simulated scan function
     private fun performRoomScan() {
         if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -211,7 +220,6 @@ class DashboardFragment : Fragment() {
         }
     }
 
-
     private fun scanWifiNetworks() {
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return
@@ -220,9 +228,41 @@ class DashboardFragment : Fragment() {
         // Use coroutine to initiate delay and handle asynchronous task
         lifecycleScope.launch {
             // Start WiFi scan
+            delay(1000)
+            wifiManager.startScan()
+            delay(2000) // Delay for 2 seconds
+
+            val currentScanResults = wifiManager.scanResults
+            val currentScanResultsMap = currentScanResults.associateBy({ it.BSSID }, { it.level })
+
+            // Check for new or significantly changed networks by comparing current scan results with previous ones
+            val significantChangesFound = currentScanResultsMap.any { (currentBSSID, currentLevel) ->
+                val previousLevel = previousScanResultsMap[currentBSSID]
+                // A network is considered new or significantly changed if:
+                // - It wasn't in the previous scan results (null check)
+                // - The signal level has changed noticeably (you can define what constitutes a significant change)
+                previousLevel == null || abs(currentLevel - previousLevel) > 0
+            }
+
+            if (significantChangesFound) {
+                // Handle the case where there are new networks or significant changes in signal levels
+                Log.d("DEBUG_CHECK_SCAN", "New networks or significant changes found! Current ${currentScanResultsMap.toString()}")
+                Log.d("DEBUG_CHECK_SCAN", "Previous ${previousScanResultsMap.toString()}")
+
+            } else {
+                // Handle the case where no new networks or significant changes are found
+                Log.d("DEBUG_CHECK_SCAN", "No new networks or significant changes.")
+            }
+
+            // Update the previousScanResultsMap with the current scan results for the next scan
+            previousScanResultsMap = currentScanResultsMap
+
+            /*
             wifiManager.startScan()
             delay(2000) // Delay for 2 seconds
             val currentScanResults = wifiManager.scanResults
+            */
+
             val currentTimeMillis = System.currentTimeMillis()
             accumulatedWifiLists.clear() // Clear existing entries
             accumulatedWifiLists.add(Pair(currentTimeMillis, currentScanResults)) // Add the latest entry
@@ -304,7 +344,6 @@ class DashboardFragment : Fragment() {
             }
         })
     }
-
 
     private fun highlightButton(activeButton: Button) {
         // Reset styles for all floor buttons to default
