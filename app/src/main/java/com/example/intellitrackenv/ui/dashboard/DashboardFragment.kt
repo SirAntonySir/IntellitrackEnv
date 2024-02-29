@@ -34,6 +34,8 @@ import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import android.Manifest
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.lifecycle.lifecycleScope
 import com.example.intellitrackenv.R
 import com.google.gson.Gson
@@ -193,7 +195,7 @@ class DashboardFragment : Fragment() {
 
             // Convert the Map into a list of RoomItem objects and sort them by descending prediction scores
             val simulatedScanResult = predictionResponse.map { entry ->
-                RoomItem("Room ${entry.key}", "${(entry.value * 100).toInt()}%")
+                RoomItem("${entry.key}", "${(entry.value * 100).toInt()}%")
             }.sortedByDescending { item ->
                 // Correctly extracting the numerical value for sorting
                 item.wifiPrediction.trimEnd('%').toInt()
@@ -204,9 +206,31 @@ class DashboardFragment : Fragment() {
                 // Update the UI with the new simulatedScanResult
                 (binding.roomsListView.adapter as RoomItemAdapter).replaceItems(simulatedScanResult)
             }
+
+            //change image according to the roomnumber (e.g. 357 is floor 3)
+            val highestPredictionRoom = simulatedScanResult.firstOrNull()
+
+            highestPredictionRoom?.let { room ->
+                val floorNumber = room.roomNumber.filter { it.isDigit() }.firstOrNull()?.toString()?.toIntOrNull()
+
+                floorNumber?.let { floor ->
+                    withContext(Dispatchers.Main) {
+                        when (floor) {
+                            3 -> {
+                                binding.imageScale.setImage(ImageSource.resource(R.drawable.floor3))
+                                highlightButton(binding.buttonFloor3)
+                            }
+                            4 -> {
+                                binding.imageScale.setImage(ImageSource.resource(R.drawable.floor4))
+                                highlightButton(binding.buttonFloor4)
+                            }
+                            else -> Toast.makeText(context, "Floor not found", Toast.LENGTH_SHORT).show()
+                        }
+                        positionMarker(room.roomNumber)
+                    }
+                }
+            }
         }
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -231,6 +255,39 @@ class DashboardFragment : Fragment() {
         // Highlight the active button
         activeButton.setBackgroundResource(R.drawable.highlighted_button_background)
     }
+
+    private fun determineFloor(roomNumber: Int): Int {
+        return roomNumber
+    }
+
+    private fun positionMarker(roomNumber: String) {
+        Log.d("Debug", "Vor dem Aufruf von positionMarker mit Raumnummer: ${roomNumber}")
+
+        val coordinatesMap = mapOf(
+            "unsure" to Pair(250, 885),
+            "357" to Pair(250, 885),
+            "355" to Pair(200, 100),
+            "350" to Pair(400, 500),
+            "450" to Pair(350, 500),
+        )
+
+
+        coordinatesMap[roomNumber]?.let { coordinates ->
+            val marker: ImageView = binding.markerView
+            val layoutParams = marker.layoutParams as RelativeLayout.LayoutParams
+
+            // Position des Markers aktualisieren
+            layoutParams.leftMargin = coordinates.first
+            layoutParams.topMargin = coordinates.second
+            marker.layoutParams = layoutParams
+
+            // Marker sichtbar machen
+            marker.visibility = View.VISIBLE
+            Log.d("MarkerPosition", "Positioning marker at: ${coordinates.first}, ${coordinates.second}")
+
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
