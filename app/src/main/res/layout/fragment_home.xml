@@ -70,7 +70,6 @@
     <Button
         android:id="@+id/btnScanWifi"
         style="@style/ButtonStyle"
-        android:fontFamily="@font/varela_round_regular"
         android:text="Start Session Scan"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"

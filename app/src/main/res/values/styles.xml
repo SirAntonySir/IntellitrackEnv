@@ -10,7 +10,7 @@
     <style name="ButtonStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/rounded_blue_background</item>
+        <item name="android:background">@drawable/button_ripple</item>
         <item name="android:minHeight">48dp</item>
     </style>
 </resources>

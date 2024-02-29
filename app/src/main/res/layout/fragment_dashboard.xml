@@ -70,7 +70,7 @@
     <Button
         android:id="@+id/scanWifiButton"
         style="@style/ButtonStyle"
-        android:text="Start WiFi Scan"
+        android:text="Start Room Prediction"
         android:layout_margin="8dp"
         android:layout_alignParentBottom="true"
         android:fontFamily="@font/varela_round_regular"
