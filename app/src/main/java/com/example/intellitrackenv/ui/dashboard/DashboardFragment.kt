@@ -33,6 +33,7 @@ import androidx.core.content.ContextCompat
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import android.Manifest
+import android.widget.Button
 import androidx.lifecycle.lifecycleScope
 import com.example.intellitrackenv.R
 import com.google.gson.Gson
@@ -69,8 +70,9 @@ class DashboardFragment : Fragment() {
         val root: View = binding.root
 
         // Set up the Subsampling Scale Image View
-        val imageView: SubsamplingScaleImageView = binding.imageScale // Assuming you have a SubsamplingScaleImageView with the ID ivLargeImage in your FragmentDashboardBinding
-        imageView.setImage(ImageSource.resource(R.drawable.floor4))
+        val imageView: SubsamplingScaleImageView = binding.imageScale
+        imageView.setImage(ImageSource.resource(R.drawable.floor3))
+        highlightButton(binding.buttonFloor3)
 
 
         // Initialize your ViewModel, adapter, set up listeners
@@ -205,6 +207,29 @@ class DashboardFragment : Fragment() {
         }
 
 
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.buttonFloor3.setOnClickListener {
+            binding.imageScale.setImage(ImageSource.resource(R.drawable.floor3))
+            highlightButton(it as Button)
+        }
+
+        binding.buttonFloor4.setOnClickListener {
+            binding.imageScale.setImage(ImageSource.resource(R.drawable.floor4))
+            highlightButton(it as Button)
+        }
+    }
+
+    private fun highlightButton(activeButton: Button) {
+        // Reset styles for all floor buttons to default
+        binding.buttonFloor3.setBackgroundResource(R.drawable.default_button_background)
+        binding.buttonFloor4.setBackgroundResource(R.drawable.default_button_background)
+
+        // Highlight the active button
+        activeButton.setBackgroundResource(R.drawable.highlighted_button_background)
     }
 
     override fun onDestroyView() {

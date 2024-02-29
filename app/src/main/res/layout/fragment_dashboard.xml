@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- activity_main.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewMap"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -19,19 +19,42 @@
         app:cardElevation="0dp"
         android:background="?attr/colorPrimaryVariant">
 
-    <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
-        android:id="@+id/imageScale"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:padding="16dp"
-        android:layout_alignParentTop="true"
-        android:background="?attr/colorPrimaryVariant"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-</androidx.cardview.widget.CardView>
+            <com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+                android:id="@+id/imageScale"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:layout_alignParentTop="true"
+                android:background="@color/white"/>
+
+            <Button
+                android:id="@+id/buttonFloor4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="4dp"
+                android:text="4"/>
+
+            <Button
+                android:id="@+id/buttonFloor3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/buttonFloor4"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="4dp"
+                android:text="3" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
 
 
-<TextView
+    <TextView
         android:id="@+id/listHeaderTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
